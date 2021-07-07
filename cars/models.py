@@ -5,7 +5,7 @@ from multiselectfield import MultiSelectField
 CAR_TYPES = (('Hatchback', 'Hatchback'),
                ('Sedan', 'Sedan'),
                ('SUV', 'SUV'),
-               ('SUV', 'Luxury'))
+               ('Luxury', 'Luxury'))
             
 TRANSMISSION_TYPES=(('Automatic','Automatic'),
                     ('Manual','Manual'))
@@ -13,10 +13,9 @@ TRANSMISSION_TYPES=(('Automatic','Automatic'),
 MODEL_YEARS=(('2010-2012','2010-2012'),
             ('2013-2016','2013-2016'),
             ('2017-2019','2017-2019'),
-            ('2020-2021','2020-2021'),
-            )
+            ('2020-2021','2020-2021'))
 class CarDetail(models.Model):
-    car_type=MultiSelectField(_('Category'),choices=CAR_TYPES,max_choices=1,blank=False,null=False)
+    car_type=MultiSelectField(_('Category'),choices=CAR_TYPES,max_choices=2,blank=False,null=False)
     company=models.CharField(_('Company'),max_length=156, blank= False, null=False,default=None)
     name=models.CharField(_('Name'),max_length=156, blank= False, null=False)
     model_year=MultiSelectField(_('Model'),choices=MODEL_YEARS,max_choices=2,blank=False,null=False)

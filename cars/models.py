@@ -20,7 +20,7 @@ class CarDetail(models.Model):
     name=models.CharField(_('Name'),max_length=156, blank= False, null=False)
     model_year=MultiSelectField(_('Model'),choices=MODEL_YEARS,max_choices=2,blank=False,null=False)
     transmission_type=MultiSelectField(_('Transmission'),choices=TRANSMISSION_TYPES,max_choices=2,blank=False,null=False)
-    price=models.FloatField(_('Price'), blank= False, null=False)
+    price=models.FloatField(_('Price (in lakhs)'), blank= False, null=False)
     detail=models.CharField(_("Description"),max_length=2000,blank=True,null=True,default=None)
     inventory=models.IntegerField(_("Stock"), blank= False, null=False,default=None)
     image1=models.ImageField(_("Image1"), upload_to='cars', height_field=None, width_field=None, max_length=None,blank= True, null=True)

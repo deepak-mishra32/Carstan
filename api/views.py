@@ -29,8 +29,10 @@ class AllCarDetailView(APIView):
 
     def get(self, request, id):
         cars= self.get_object(id)
-        serializer=CarDetailSerializers(cars)
-        return Response(serializer.data)
+        if cars is not None:
+            serializer=CarDetailSerializers(cars)
+            return Response(serializer.data)
+        return Response("Not Such Data",status=status.HTTP_404_NOT_FOUND)
 
     def put(self,request,id):
         cars= self.get_object(id)

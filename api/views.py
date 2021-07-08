@@ -54,5 +54,5 @@ class ProductDetailView(APIView):
         # print(type)
         cars= CarDetail.objects.all().filter(name=name)
         serializer = CarDetailSerializers(cars,many=True)
-        print(serializer.data)
+        # print(serializer.data)
         return Response(serializer.data)

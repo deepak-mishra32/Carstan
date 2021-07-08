@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from cars.models import CarDetail
 from api.serializers import CarDetailSerializers
 from rest_framework import status
+from django.db.models import Count
 
 class CarDetailAPIView(APIView):
 
@@ -51,8 +52,12 @@ class ProductDetailView(APIView):
 
     def get(self, request,name):
         # cars= CarDetail.objects.all()
-        # print(type)
-        cars= CarDetail.objects.all().filter(name__istartswith=name)
-        serializer = CarDetailSerializers(cars,many=True)
+        try:
+            # cars= CarDetail.objects.get(car_type=category)
+            cars = CarDetail.objects.get(name__istartswith=name)
+            serializer = CarDetailSerializers(cars)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Error":f"Not Data Found For {name}"},status=status.HTTP_404_NOT_FOUND)
+            
         # print(serializer.data)
-        return Response(serializer.data)

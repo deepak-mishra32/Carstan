@@ -52,7 +52,7 @@ class ProductDetailView(APIView):
     def get(self, request,name):
         # cars= CarDetail.objects.all()
         # print(type)
-        cars= CarDetail.objects.all().filter(name=name)
+        cars= CarDetail.objects.all().filter(name__istartswith=name)
         serializer = CarDetailSerializers(cars,many=True)
         # print(serializer.data)
         return Response(serializer.data)

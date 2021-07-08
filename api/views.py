@@ -46,3 +46,13 @@ class AllCarDetailView(APIView):
         cars= self.get_object(id)    
         cars.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ProductDetailView(APIView):
+
+    def get(self, request,name):
+        # cars= CarDetail.objects.all()
+        # print(type)
+        cars= CarDetail.objects.all().filter(name=name)
+        serializer = CarDetailSerializers(cars,many=True)
+        print(serializer.data)
+        return Response(serializer.data)

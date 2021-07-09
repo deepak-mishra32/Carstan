@@ -51,13 +51,59 @@ class AllCarDetailView(APIView):
 class ProductDetailView(APIView):
 
     def get(self, request,name):
-        # cars= CarDetail.objects.all()
         try:
-            # cars= CarDetail.objects.get(car_type=category)
             cars = CarDetail.objects.get(name__istartswith=name)
             serializer = CarDetailSerializers(cars)
             return Response(serializer.data,status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"Error":f"Not Data Found For {name}"},status=status.HTTP_404_NOT_FOUND)
-            
-        # print(serializer.data)
+
+class CompanyProductView(APIView):
+
+    def get(self, request,company):
+        try:
+            cars = CarDetail.objects.all().filter(company__istartswith=company)
+            serializer = CarDetailSerializers(cars,many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Error":f"Not Data Found For {company}"},status=status.HTTP_404_NOT_FOUND)
+
+class CarTypeView(APIView):
+
+    def get(self, request,type):
+        try:
+            cars = CarDetail.objects.all().filter(car_type__icontains=type)
+            serializer = CarDetailSerializers(cars,many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Error":f"Not Data Found For {type}"},status=status.HTTP_404_NOT_FOUND)
+
+class PriceView(APIView):
+
+    def get(self, request,price):
+        try:
+            cars = CarDetail.objects.all().filter(price__lte=price)
+            serializer = CarDetailSerializers(cars,many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Error":f"Not Data Found For {price}"},status=status.HTTP_404_NOT_FOUND)
+
+class TransmissionTypeView(APIView):
+
+    def get(self, request,type):
+        try:
+            cars = CarDetail.objects.all().filter(transmission_type__icontains=type)
+            serializer = CarDetailSerializers(cars,many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Error":f"Not Data Found For {type}"},status=status.HTTP_404_NOT_FOUND)
+
+class FilterView(APIView):
+
+    def get(self, request,type,category,company,price,fuel):
+        try:
+            cars = CarDetail.objects.all().filter(transmission_type__icontains=type).filter(company__icontains=company).filter(car_type__icontains=category).filter(price__lte=price).filter(fuel_type__icontains=fuel)
+            serializer = CarDetailSerializers(cars,many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Error":f"Not Data Found For {type},{category},{fuel},{price} and {company}"},status=status.HTTP_404_NOT_FOUND)                        

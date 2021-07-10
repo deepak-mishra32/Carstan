@@ -3,12 +3,12 @@ from rest_framework.response import Response
 from cars.models import CarDetail
 from api.serializers import CarDetailSerializers
 from rest_framework import status
-from django.db.models import Count
+from random import randint
 
 class CarDetailAPIView(APIView):
 
     def get(self, request):
-        cars= CarDetail.objects.all()
+        cars= CarDetail.objects.all().order_by('?')
         serializer = CarDetailSerializers(cars, many=True)
         return Response(serializer.data)
 
@@ -72,7 +72,8 @@ class CarTypeView(APIView):
 
     def get(self, request,type):
         try:
-            cars = CarDetail.objects.all().filter(car_type__icontains=type)
+            cars = CarDetail.objects.all().filter(car_type__icontains=type).order_by('?')[:3]
+            # random_cars = cars[:3]
             serializer = CarDetailSerializers(cars,many=True)
             return Response(serializer.data,status=status.HTTP_200_OK)
         except Exception as e:

@@ -7,7 +7,7 @@ from django.conf import settings
 urlpatterns = [
     path('carstan-admin/', admin.site.urls),
     path('Hello/',include('cars.urls')),
-    path('', include('api.urls')),
+    path('api/', include('api.urls')),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,

@@ -72,7 +72,7 @@ class CarTypeView(APIView):
 
     def get(self, request,type):
         try:
-            cars = CarDetail.objects.all().filter(car_type__icontains=type).order_by('?')[:3]
+            cars = CarDetail.objects.all().filter(car_type__icontains=type).order_by('?')[:6]
             # random_cars = cars[:3]
             serializer = CarDetailSerializers(cars,many=True)
             return Response(serializer.data,status=status.HTTP_200_OK)
